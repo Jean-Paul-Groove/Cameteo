@@ -1,0 +1,7 @@
+.coordinates {
+  display: flex;
+  flex-direction: column;
+  z-index: 2;
+  border: 1px solid black;
+  position: relative;
+}
