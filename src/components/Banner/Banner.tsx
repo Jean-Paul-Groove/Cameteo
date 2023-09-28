@@ -2,9 +2,12 @@ import "./Banner.css";
 import bannerImg from "../../assets/clear-sky-clouds-nature-5k-f3.webp";
 import SearchBar from "./SearchBar/SearchBar";
 import bannerLogo from "../../assets/cameleon.webp";
+import LocationContext from "../../context/locationContext";
+import { useContext } from "react";
 function Banner() {
+  const { location } = useContext(LocationContext);
   return (
-    <div className="banner">
+    <div className={location.name ? "banner shrinked" : "banner"}>
       <img className="banner-img" src={bannerImg} />
       <img src={bannerLogo} alt="logo" className="banner-logo" />
       <h1 className="banner-title">Camétéo</h1>

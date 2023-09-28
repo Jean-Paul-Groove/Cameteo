@@ -8,7 +8,7 @@ import LocationContext from "../../../context/locationContext";
 import ListDivider from "@mui/joy/ListDivider";
 
 function SearchBar() {
-  const numberOfResults = 10;
+  const numberOfResults = 5;
   const localisation = "fr";
 
   const [searchResult, setSearchResult] = useState<SearchResultArray>({
@@ -75,11 +75,18 @@ function SearchBar() {
           </Button>
         }
       ></Input>
-      {searchResult.results.length && (
+      {searchResult.results.length > 0 && (
         <List
-          sx={{ position: "absolute", backgroundColor: "white", zIndex: 3 }}
+          sx={{
+            position: "absolute",
+            backgroundColor: "white",
+            zIndex: 3,
+            maxHeight: "50vh",
+            overflowY: "scroll",
+            transform: "translateY(-5px)",
+          }}
         >
-          {searchResult.results.map((result) => (
+          {searchResult.results.map((result, index) => (
             <>
               <ListItemButton
                 key={result.id}
@@ -97,7 +104,9 @@ function SearchBar() {
               >
                 {result.name + ", " + result.admin2 + ", " + result.country}
               </ListItemButton>
-              <ListDivider />
+              {index != searchResult.results.length - 1 && (
+                <ListDivider key={result.id + "divider"} />
+              )}
             </>
           ))}
         </List>

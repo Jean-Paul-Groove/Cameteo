@@ -13,10 +13,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-#root{
+#root {
   width: 100%;
   min-height: 100vh;
   height: fit-content;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 a {
   font-weight: 500;

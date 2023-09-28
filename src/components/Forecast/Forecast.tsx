@@ -1,6 +1,8 @@
 import LocationContext, { location } from "../../context/locationContext";
 import { useContext, useEffect, useState } from "react";
 import "./Forecast.css";
+import DailyForecast from "./DailyForecast/DailyForecast";
+import { Sheet, Typography } from "@mui/joy";
 
 function Forecast() {
   const { location } = useContext(LocationContext);
@@ -8,7 +10,7 @@ function Forecast() {
   async function fetchWeatherPredictions(location: location) {
     try {
       const data = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,precipitation_probability,weathercode&forecast_days&elevation=${location.elevation}&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,sunrise,sunset`
+        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,precipitation_probability,weathercode&forecast_days&timezone=auto&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,sunrise,sunset`
       );
       const predictions = await data.json();
       setWeatherPrediction(predictions);
@@ -18,24 +20,25 @@ function Forecast() {
     }
   }
   useEffect(() => {
-    if (
-      location.name &&
-      location.elevation &&
-      location.latitude &&
-      location.longitude
-    ) {
+    if (location.name && location.latitude && location.longitude) {
       fetchWeatherPredictions(location);
     }
   }, [location]);
-
-  return (
-    <div className="coordinates">
-      {" "}
-      <span className="coordinate-item">Longitude:{location?.longitude}</span>
-      <span className="coordinate-item">Latitude: {location?.latitude}</span>
-      <span className="coordinate-item">Elevation:{location?.elevation}</span>
-    </div>
-  );
+  if (location.name) {
+    return (
+      <Sheet variant="soft">
+        <Typography
+          color="primary"
+          variant="solid"
+          level="h2"
+          sx={{ textAlign: "center" }}
+        >
+          {location.name}
+        </Typography>
+        {weatherPrediction && <DailyForecast forecast={weatherPrediction} />}
+      </Sheet>
+    );
+  }
 }
 
 export default Forecast;
