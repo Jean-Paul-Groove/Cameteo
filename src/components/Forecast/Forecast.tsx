@@ -5,12 +5,13 @@ import DailyForecast from "./DailyForecast/DailyForecast";
 import { Sheet, Typography } from "@mui/joy";
 
 function Forecast() {
+  const daysOfForecast = 10;
   const { location } = useContext(LocationContext);
   const [weatherPrediction, setWeatherPrediction] = useState();
   async function fetchWeatherPredictions(location: location) {
     try {
       const data = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,precipitation_probability,weathercode&forecast_days&timezone=auto&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,sunrise,sunset`
+        `https://api.open-meteo.com/v1/forecast?latitude=${location.latitude}&longitude=${location.longitude}&hourly=temperature_2m,precipitation_probability,weathercode&forecast_days&timezone=auto&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weathercode,sunrise,sunset&forecast_days=${daysOfForecast}`
       );
       const predictions = await data.json();
       setWeatherPrediction(predictions);
@@ -26,12 +27,16 @@ function Forecast() {
   }, [location]);
   if (location.name) {
     return (
-      <Sheet variant="soft">
+      <Sheet variant="soft" sx={{ minHeight: "100vh" }}>
         <Typography
           color="primary"
           variant="solid"
           level="h2"
-          sx={{ textAlign: "center" }}
+          sx={{
+            textAlign: "center",
+            margin: "0",
+            borderRadius: 0,
+          }}
         >
           {location.name}
         </Typography>

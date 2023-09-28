@@ -16,7 +16,7 @@
 #root {
   width: 100%;
   min-height: 100vh;
-  height: fit-content;
+  height: 100%;
 }
 * {
   margin: 0;

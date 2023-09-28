@@ -13,3 +13,9 @@
 .daily--card__line--prediction--description {
   text-align: right;
 }
+@media screen and (max-width: 600px) {
+  .daily--card__line {
+    min-width: none;
+    width: 70vw;
+  }
+}
