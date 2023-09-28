@@ -24,41 +24,50 @@ function SearchBar() {
       generationtime_ms: 0,
     });
   }
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
+  async function fetchWeatherPredictions(search: string) {
     setIsloading(true);
     try {
       const data = await fetch(
-        `https://geocoding-api.open-meteo.com/v1/search?name=${searchContent}&language=${localisation}&count=${numberOfResults}`
+        `https://geocoding-api.open-meteo.com/v1/search?name=${search}&language=${localisation}&count=${numberOfResults}`
       );
       const result = await data.json();
       if (!result.results) {
         throw new Error(
-          `Nous n'avons pas pu trouver de lieu correspondant à "${searchContent}", veuillez réessayer`
+          `Nous n'avons pas pu trouver de lieu correspondant à "${search}", veuillez réessayer`
         );
       }
       setSearchResult(result);
       console.log(result);
     } catch (error) {
-      alert(error);
-      setSearchContent("");
+      console.log(error);
       resetSearchResults();
     } finally {
       setIsloading(false);
+    }
+  }
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    fetchWeatherPredictions(searchContent);
+  }
+  function preSearch(search: string) {
+    if (search.length > 5) {
+      fetchWeatherPredictions(search);
     }
   }
 
   return (
     <form onSubmit={handleSubmit}>
       <Input
-        onBlur={resetSearchResults}
         variant="plain"
         size="lg"
         color="primary"
         placeholder="Votre ville ... "
         value={searchContent}
         sx={{ "--Input-decoratorChildHeight": "45px" }}
-        onChange={(event) => setSearchContent(event.target.value)}
+        onChange={(event) => {
+          setSearchContent(event.target.value);
+          preSearch(event.target.value);
+        }}
         endDecorator={
           <Button
             variant="solid"
@@ -96,7 +105,7 @@ function SearchBar() {
                       longitude: result.longitude,
                       latitude: result.latitude,
                       elevation: result.elevation,
-                      name: result.name,
+                      name: result.name + ", " + result.admin1,
                     });
                   }
                   resetSearchResults();
