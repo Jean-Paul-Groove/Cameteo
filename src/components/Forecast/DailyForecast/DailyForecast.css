@@ -1,14 +1,14 @@
 .daily--forecast__wrapper {
-  padding: 1vw;
+  padding: 4vh 0;
   display: flex;
   overflow-x: hidden;
 }
 #daily--forecast__gallery {
-  transition: all 0.5s linear;
+  transition: all 0.7s ease-in-out;
 }
 
-.daily--card__line.empty-div {
-  width: 15vw;
+.empty-div {
+  width: 300px;
   min-width: 0;
 }
 .daily--forecast__wrapper__navigation {

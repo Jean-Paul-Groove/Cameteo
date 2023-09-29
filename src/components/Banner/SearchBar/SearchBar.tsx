@@ -56,7 +56,7 @@ function SearchBar() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="search-bar">
       <Input
         variant="plain"
         size="lg"
@@ -109,6 +109,7 @@ function SearchBar() {
                     });
                   }
                   resetSearchResults();
+                  setSearchContent("");
                 }}
               >
                 {result.name + ", " + result.admin2 + ", " + result.country}

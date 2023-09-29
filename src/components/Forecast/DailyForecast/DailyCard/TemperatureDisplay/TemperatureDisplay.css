@@ -1,0 +1,13 @@
+.daily--card__temperature-display {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.daily--card__temperature-display-item {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}
+.temperature-display-item-right {
+  align-items: end;
+}

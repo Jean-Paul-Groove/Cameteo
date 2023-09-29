@@ -1,0 +1,12 @@
+.daily--card__line--prediction {
+  width: 100%;
+  text-align: left;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.daily--card__line--prediction--description {
+  text-align: right;
+}
+.prediction-sticker {
+  justify-self: center;
+}

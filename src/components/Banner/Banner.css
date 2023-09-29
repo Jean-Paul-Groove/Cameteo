@@ -8,6 +8,9 @@
   align-items: center;
   transition: all 1s 0.6s ease-out;
 }
+.hidden-letter {
+  display: none;
+}
 .shrinked {
   height: 20vh;
   min-height: 200px;
@@ -32,4 +35,7 @@
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
   margin: 5vh 0;
+}
+.banner-title-o {
+  height: 0.6em;
 }

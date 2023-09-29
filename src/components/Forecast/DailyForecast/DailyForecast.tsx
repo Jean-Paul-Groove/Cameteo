@@ -15,33 +15,35 @@ function DailyForecast(props: { forecast: Forecast }) {
     const hourlyData = forecast.hourly;
 
     for (let i = 0; i < dailyData.time.length; i++) {
+      const weather: {
+        [index: string]: { icon: string; description: string };
+      } = {};
+      for (let j = 0; j < 24; j++) {
+        weather["h" + j] = associateIconWithWeatherCode(
+          hourlyData.weathercode[i * 24 + j]
+        );
+      }
       const day = {
         date: dailyData.time[i],
-        weather: {
-          h8: associateIconWithWeatherCode(hourlyData.weathercode[i * 24 + 8]),
-          h12: associateIconWithWeatherCode(
-            hourlyData.weathercode[i * 24 + 12]
-          ),
-          h16: associateIconWithWeatherCode(
-            hourlyData.weathercode[i * 24 + 16]
-          ),
-          h20: associateIconWithWeatherCode(
-            hourlyData.weathercode[i * 24 + 20]
-          ),
-        },
+        weather: weather,
         precipitation: dailyData.precipitation_sum[i],
         tempMax: dailyData.temperature_2m_max[i],
         tempMin: dailyData.temperature_2m_min[i],
-        sunrise: dailyData.sunrise[i].split("T")[1],
-        sunset: dailyData.sunset[i].split("T")[1],
+        sunrise: dailyData.sunrise[i],
+        sunset: dailyData.sunset[i],
+        windDirection: dailyData.winddirection_10m_dominant[i],
+        windSpeed: dailyData.windspeed_10m_max[i],
       };
       weekWeatherData.push(day);
     }
+    console.log(weekWeatherData);
     return weekWeatherData;
   }
 
   function associateIconWithWeatherCode(code: number) {
-    return weatherCodeEnum[`${code}`];
+    const weather: { icon: string; description: string } =
+      weatherCodeEnum[`${code}`];
+    return weather;
   }
 
   function showNextDay(action: "prev" | "next") {

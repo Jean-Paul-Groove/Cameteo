@@ -1,4 +1,4 @@
-.daily--card__line {
+.daily-card {
   min-width: 300px;
   width: 100%;
   display: flex;
@@ -6,15 +6,9 @@
   align-items: center;
   text-align: right;
 }
-.daily--card__line--prediction {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-.daily--card__line--prediction--description {
-  text-align: right;
-}
+
 @media screen and (max-width: 600px) {
-  .daily--card__line {
+  .daily-card {
     min-width: none;
     width: 70vw;
   }

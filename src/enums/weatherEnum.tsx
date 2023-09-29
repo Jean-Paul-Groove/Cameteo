@@ -8,7 +8,9 @@ import rain from "../assets/icons8-rain-50.png";
 import snow from "../assets/icons8-snow-50.png";
 import freezingRain from "../assets/icons8-sleet-50.png";
 import thunderStorm from "../assets/icons8-storm-50.png";
-export const weatherCodeEnum = {
+export const weatherCodeEnum: {
+  [index: number]: { icon: string; description: string };
+} = {
   0: { description: "Ciel dégagé", icon: sunny },
   1: { description: "Légerement couvert", icon: partlyCloudy },
   2: { description: "Partiellement couvert", icon: cloudy },

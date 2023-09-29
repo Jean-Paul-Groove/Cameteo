@@ -1,0 +1,14 @@
+.daily--card__sun-time-display {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.daily--card__sun-time-display-item {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+.sun-time-display-item-right {
+  align-items: right;
+}

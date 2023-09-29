@@ -35,5 +35,7 @@ export interface Forecast {
     weathercode: number[];
     sunrise: string[];
     sunset: string[];
+    winddirection_10m_dominant: number[];
+    windspeed_10m_max: number[];
   };
 }
