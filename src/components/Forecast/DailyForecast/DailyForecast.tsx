@@ -13,37 +13,74 @@ function DailyForecast(props: { forecast: Forecast }) {
     const weekWeatherData = [];
     const dailyData = forecast.daily;
     const hourlyData = forecast.hourly;
-
+    function timeToNumberOfSecond(time: string) {
+      const timeArray = time.split(":");
+      const numberOfSecond = +timeArray[0] * 3600 + +timeArray[1] * 60;
+      return numberOfSecond;
+    }
     for (let i = 0; i < dailyData.time.length; i++) {
-      const weather: {
-        [index: string]: { icon: string; description: string };
+      const hourlyForecast: {
+        [index: string]: {
+          weather: { icon: string; description: string };
+          temp: number;
+        };
       } = {};
+      const sunrise = dailyData.sunrise[i];
+      const sunset = dailyData.sunset[i];
+
+      const sunsetTimeAsNumber =
+        timeToNumberOfSecond(sunset.split("T")[1]) / 3600;
+
+      const sunriseTimeAsNumber =
+        timeToNumberOfSecond(sunrise.split("T")[1]) / 3600;
+      console.log(sunsetTimeAsNumber);
+      console.log(sunriseTimeAsNumber);
       for (let j = 0; j < 24; j++) {
-        weather["h" + j] = associateIconWithWeatherCode(
-          hourlyData.weathercode[i * 24 + j]
-        );
+        const isNight = j < sunriseTimeAsNumber || j > sunsetTimeAsNumber;
+        if (isNight) {
+          console.log("j " + j);
+          console.log("sunrise: " + sunriseTimeAsNumber);
+          console.log("sunset: " + sunsetTimeAsNumber);
+        }
+
+        hourlyForecast["h" + j] = {
+          weather: associateIconWithWeatherCode(
+            hourlyData.weathercode[i * 24 + j],
+            isNight
+          ),
+          temp: hourlyData.temperature_2m[i * 24 + j],
+        };
       }
       const day = {
         date: dailyData.time[i],
-        weather: weather,
+        hourlyForecast: hourlyForecast,
         precipitation: dailyData.precipitation_sum[i],
         tempMax: dailyData.temperature_2m_max[i],
         tempMin: dailyData.temperature_2m_min[i],
-        sunrise: dailyData.sunrise[i],
+        sunrise: sunrise,
         sunset: dailyData.sunset[i],
         windDirection: dailyData.winddirection_10m_dominant[i],
         windSpeed: dailyData.windspeed_10m_max[i],
       };
       weekWeatherData.push(day);
     }
-    console.log(weekWeatherData);
     return weekWeatherData;
   }
 
-  function associateIconWithWeatherCode(code: number) {
-    const weather: { icon: string; description: string } =
+  function associateIconWithWeatherCode(code: number, night = false) {
+    const weather: { icon: string; description: string; iconNight?: string } =
       weatherCodeEnum[`${code}`];
-    return weather;
+
+    const dayWeather = { ...weather };
+    if (!night) {
+      return dayWeather;
+    } else {
+      const weatherNight = { ...weather };
+      if (weatherNight.iconNight) {
+        weatherNight.icon = weatherNight.iconNight;
+      }
+      return weatherNight;
+    }
   }
 
   function showNextDay(action: "prev" | "next") {
@@ -111,6 +148,7 @@ function DailyForecast(props: { forecast: Forecast }) {
           id="daily--forecast__gallery"
           direction="row"
           justifyContent="flex-start"
+          alignItems="flex-start"
           spacing={2}
         >
           <div className="daily--card__line empty-div"></div>

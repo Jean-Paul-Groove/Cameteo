@@ -2,6 +2,7 @@ import { Avatar } from "@mui/joy";
 import "./RainWindDisplay.css";
 import precipitationIcon from "../../../../../assets/icons8-hygrometer-50.png";
 import windIcon from "../../../../../assets/icons8-windsock-50.png";
+import windRose from "../../../../../assets/icons8-wind-rose-50.png";
 function RainWindDisplay(props: {
   windSpeed: number;
   windDirection: number;
@@ -46,8 +47,26 @@ function RainWindDisplay(props: {
         {precipitation}mm
       </div>
       <div className="daily--card__rain-wind-display wind-display">
-        <Avatar variant="plain" src={windIcon} alt="Vent" title="vent" />
-        {windSpeed + "km/h " + convertWindAngle(windDirection)}
+        <div className="daily--card__rain-wind-display wind-speed">
+          <Avatar
+            variant="plain"
+            src={windIcon}
+            alt="Force du vent"
+            title="Force du vent"
+          />
+          {Math.round(windSpeed) + " Km/h"}
+        </div>
+        <div className="daily--card__rain-wind-display wind-direction">
+          {" "}
+          <Avatar
+            size="sm"
+            variant="plain"
+            src={windRose}
+            alt="Direction du vent"
+            title="Direction du vent"
+          />
+          {convertWindAngle(windDirection)}
+        </div>
       </div>
     </div>
   );

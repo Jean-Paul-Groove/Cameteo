@@ -1,10 +1,13 @@
 import { Avatar } from "@mui/joy";
 import "./DailyCardWeatherPrediction.css";
 function DailyCardWeatherPrediction(props: {
-  weather: { icon: string; description: string };
+  hourlyPrediction: {
+    weather: { icon: string; description: string };
+    temp: number;
+  };
   children: React.ReactNode;
 }) {
-  const { weather } = props;
+  const { hourlyPrediction } = props;
 
   return (
     <div className="daily--card__line--prediction">
@@ -12,12 +15,12 @@ function DailyCardWeatherPrediction(props: {
       <Avatar
         className="prediction-sticker"
         variant="plain"
-        src={weather.icon}
-        alt={weather.description}
-        title={weather.description}
+        src={hourlyPrediction.weather.icon}
+        alt={hourlyPrediction.weather.description}
+        title={hourlyPrediction.weather.description}
       />
       <span className="daily--card__line--prediction--description">
-        {weather.description}
+        {Math.round(hourlyPrediction.temp) + "°C"}
       </span>
     </div>
   );

@@ -12,8 +12,11 @@ import RainWindDisplay from "./RainWindDisplay/RainWindDisplay";
 function DailyCard(props: {
   day: {
     date: string;
-    weather: {
-      [index: string]: { icon: string; description: string };
+    hourlyForecast: {
+      [index: string]: {
+        weather: { icon: string; description: string };
+        temp: number;
+      };
     };
     precipitation: number;
     tempMax: number;
@@ -61,14 +64,16 @@ function DailyCard(props: {
         windDirection={day.windDirection}
         windSpeed={day.windSpeed}
       />
-      {Object.keys(day.weather).map((weatherKey, index) => {
+      {Object.keys(day.hourlyForecast).map((weatherKey, index) => {
         if (predictionDisplay === "daily" && !hoursToShow.includes(index)) {
           return;
         } else {
           return (
             <>
               <Divider inset="none" orientation="horizontal" />
-              <DailyCardWeatherPrediction weather={day.weather[weatherKey]}>
+              <DailyCardWeatherPrediction
+                hourlyPrediction={day.hourlyForecast[weatherKey]}
+              >
                 {weatherKey.split("h")[1] + "h"}
               </DailyCardWeatherPrediction>
             </>

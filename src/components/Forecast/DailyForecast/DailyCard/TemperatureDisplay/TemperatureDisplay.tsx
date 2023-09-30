@@ -13,7 +13,7 @@ function TemperatureDisplay(props: { tempMax: number; tempMin: number }) {
           alt="Température maximale"
           title="Température maximale"
         />
-        {"Max " + tempMax}C°
+        {"Max " + Math.round(tempMax)}C°
       </div>
       <div className=" daily--card__temperature-display-item temperature-display-item-right">
         <Avatar
@@ -22,7 +22,7 @@ function TemperatureDisplay(props: { tempMax: number; tempMin: number }) {
           alt="Température minimale"
           title="Température minimale"
         />
-        {"Min " + tempMin}C°
+        {"Min " + Math.round(tempMin)}C°
       </div>
     </div>
   );

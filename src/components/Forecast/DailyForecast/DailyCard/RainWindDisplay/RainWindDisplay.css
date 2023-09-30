@@ -12,6 +12,14 @@
 }
 .wind-display {
   display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+.wind-speed,
+.wind-direction {
+  display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: center;
+  width: fit-content;
+  margin-left: 2vw;
 }
