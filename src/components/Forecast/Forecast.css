@@ -1,7 +1,17 @@
-.coordinates {
-  display: flex;
-  flex-direction: column;
-  z-index: 2;
-  border: 1px solid black;
-  position: relative;
+.forecast__main {
+  margin-top: 30vh;
+}
+.forecast__location {
+  animation: appears 1s ease-in-out;
+}
+@keyframes appears {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }

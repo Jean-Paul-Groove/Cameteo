@@ -1,9 +1,9 @@
 import { useState } from "react";
 import "./App.css";
-import Banner from "./components/Banner/Banner";
 import LocationContext from "./context/locationContext";
 import { location } from "./context/locationContext";
 import Forecast from "./components/Forecast/Forecast";
+import Header from "./components/Header/Header";
 function App() {
   const [location, setLocation] = useState<location>({
     longitude: undefined,
@@ -13,7 +13,7 @@ function App() {
   });
   return (
     <LocationContext.Provider value={{ location, setLocation }}>
-      <Banner />
+      <Header />
       <Forecast />
     </LocationContext.Provider>
   );

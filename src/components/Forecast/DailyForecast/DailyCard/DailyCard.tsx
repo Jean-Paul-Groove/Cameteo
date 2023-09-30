@@ -63,23 +63,25 @@ function DailyCard(props: {
         precipitation={day.precipitation}
         windDirection={day.windDirection}
         windSpeed={day.windSpeed}
-      />
-      {Object.keys(day.hourlyForecast).map((weatherKey, index) => {
-        if (predictionDisplay === "daily" && !hoursToShow.includes(index)) {
-          return;
-        } else {
-          return (
-            <>
-              <Divider inset="none" orientation="horizontal" />
-              <DailyCardWeatherPrediction
-                hourlyPrediction={day.hourlyForecast[weatherKey]}
-              >
-                {weatherKey.split("h")[1] + "h"}
-              </DailyCardWeatherPrediction>
-            </>
-          );
-        }
-      })}
+      />{" "}
+      <div className="daily-card__hourly-predictions">
+        {Object.keys(day.hourlyForecast).map((weatherKey, index) => {
+          if (predictionDisplay === "daily" && !hoursToShow.includes(index)) {
+            return;
+          } else {
+            return (
+              <>
+                <Divider inset="none" orientation="horizontal" />
+                <DailyCardWeatherPrediction
+                  hourlyPrediction={day.hourlyForecast[weatherKey]}
+                >
+                  {weatherKey.split("h")[1] + "h"}
+                </DailyCardWeatherPrediction>
+              </>
+            );
+          }
+        })}
+      </div>
       <CardSwitchPrediction
         predictionState={predictionDisplay}
         setPrediction={setPredictionDisplay}

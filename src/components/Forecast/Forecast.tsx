@@ -2,7 +2,7 @@ import LocationContext, { location } from "../../context/locationContext";
 import { useContext, useEffect, useState } from "react";
 import "./Forecast.css";
 import DailyForecast from "./DailyForecast/DailyForecast";
-import { Sheet, Typography } from "@mui/joy";
+import { Typography } from "@mui/joy";
 
 function Forecast() {
   const daysOfForecast = 10;
@@ -27,26 +27,21 @@ function Forecast() {
   }, [location]);
   if (location.name) {
     return (
-      <main>
-        <Sheet
-          variant="soft"
+      <main className="forecast__main">
+        <Typography
+          className="forecast__location"
           color="primary"
-          sx={{ minHeight: "100vh", paddingBottom: "5vh" }}
+          variant="soft"
+          level="h2"
+          sx={{
+            textAlign: "center",
+            margin: "0",
+            borderRadius: 0,
+          }}
         >
-          <Typography
-            color="primary"
-            variant="solid"
-            level="h2"
-            sx={{
-              textAlign: "center",
-              margin: "0",
-              borderRadius: 0,
-            }}
-          >
-            {location.name}
-          </Typography>
-          {weatherPrediction && <DailyForecast forecast={weatherPrediction} />}
-        </Sheet>
+          {location.name}
+        </Typography>
+        {weatherPrediction && <DailyForecast forecast={weatherPrediction} />}
       </main>
     );
   }

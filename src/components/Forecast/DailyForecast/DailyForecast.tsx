@@ -151,12 +151,10 @@ function DailyForecast(props: { forecast: Forecast }) {
           alignItems="flex-start"
           spacing={2}
         >
-          <div className="daily--card__line empty-div"></div>
           {weekWeatherData &&
             weekWeatherData.map((day, index) => {
               return <DailyCard day={day} id={"card-" + index} />;
             })}
-          <div className="daily--card__line empty-div"></div>
         </Stack>
       </div>
     </div>

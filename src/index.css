@@ -38,6 +38,8 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url("./assets/clear-sky-clouds-nature-5k-f3.webp");
+  background-size: cover;
 }
 
 h1 {
