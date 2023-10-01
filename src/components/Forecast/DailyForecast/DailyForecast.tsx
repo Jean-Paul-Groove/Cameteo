@@ -95,10 +95,11 @@ function DailyForecast(props: { forecast: Forecast }) {
     const gallery = document.getElementById("daily--forecast__gallery");
     const firstCard = document.getElementById("card-0");
     if (gallery && firstCard) {
-      const cardWidth =
-        +window.getComputedStyle(firstCard).width.split("px")[0] +
-        +window.getComputedStyle(firstCard).marginLeft.split("px")[0];
-      gallery.style.transform = `translateX(-${cardWidth * newDayIndex}px)`;
+      const galleryFrame =
+        +window.getComputedStyle(gallery).width.split("px")[0] /
+        weekWeatherData.length;
+
+      gallery.style.transform = `translateX(-${galleryFrame * newDayIndex}px)`;
     }
 
     if (

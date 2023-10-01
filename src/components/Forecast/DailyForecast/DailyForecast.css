@@ -1,15 +1,11 @@
 .daily--forecast__wrapper {
-  padding: 4vh 2vw;
+  padding: 4vh 0vw;
   display: flex;
   overflow-x: hidden;
 }
 #daily--forecast__gallery {
   transition: all 0.7s ease-in-out;
-}
-
-.empty-div {
-  width: 300px;
-  min-width: 0;
+  margin-left: 7vw;
 }
 .daily--forecast__wrapper__navigation {
   position: relative;
@@ -38,7 +34,7 @@
   transform: rotate(180deg);
 }
 @media screen and (max-width: 600px) {
-  .daily--card__line.empty-div {
-    width: 0;
+  #daily--forecast__gallery {
+    margin-left: 15vw;
   }
 }
