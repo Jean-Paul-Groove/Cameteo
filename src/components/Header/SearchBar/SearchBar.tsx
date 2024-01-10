@@ -37,7 +37,6 @@ function SearchBar() {
         );
       }
       setSearchResult(result);
-      console.log(result);
     } catch (error) {
       console.log(error);
       resetSearchResults();
@@ -96,9 +95,8 @@ function SearchBar() {
           }}
         >
           {searchResult.results.map((result, index) => (
-            <>
+            <div key={result.id + "container"}>
               <ListItemButton
-                key={result.id}
                 onClick={() => {
                   if (setLocation) {
                     setLocation({
@@ -114,10 +112,8 @@ function SearchBar() {
               >
                 {result.name + ", " + result.admin2 + ", " + result.country}
               </ListItemButton>
-              {index != searchResult.results.length - 1 && (
-                <ListDivider key={result.id + "divider"} />
-              )}
-            </>
+              {index != searchResult.results.length - 1 && <ListDivider />}
+            </div>
           ))}
         </List>
       )}

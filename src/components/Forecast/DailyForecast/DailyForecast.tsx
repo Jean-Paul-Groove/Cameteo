@@ -4,20 +4,22 @@ import { BiSolidRightArrow } from "react-icons/bi";
 import DailyCard from "./DailyCard/DailyCard";
 import { weatherCodeEnum } from "../../../enums/weatherEnum";
 import { Stack } from "@mui/joy";
-import { useRef, useState } from "react";
+import { TouchEvent, WheelEvent, useRef, useState } from "react";
 function DailyForecast(props: { forecast: Forecast }) {
   const { forecast } = props;
   const dayVisible = useRef(0);
   const [navigationHidden, setNavigationHidden] = useState("left");
+  let startTouchXPosition = 0;
+  function timeToNumberOfSecond(time: string) {
+    const timeArray = time.split(":");
+    const numberOfSecond = +timeArray[0] * 3600 + +timeArray[1] * 60;
+    return numberOfSecond;
+  }
   function regroupDataPerDay(forecast: Forecast) {
     const weekWeatherData = [];
     const dailyData = forecast.daily;
     const hourlyData = forecast.hourly;
-    function timeToNumberOfSecond(time: string) {
-      const timeArray = time.split(":");
-      const numberOfSecond = +timeArray[0] * 3600 + +timeArray[1] * 60;
-      return numberOfSecond;
-    }
+
     for (let i = 0; i < dailyData.time.length; i++) {
       const hourlyForecast: {
         [index: string]: {
@@ -33,15 +35,9 @@ function DailyForecast(props: { forecast: Forecast }) {
 
       const sunriseTimeAsNumber =
         timeToNumberOfSecond(sunrise.split("T")[1]) / 3600;
-      console.log(sunsetTimeAsNumber);
-      console.log(sunriseTimeAsNumber);
+
       for (let j = 0; j < 24; j++) {
         const isNight = j < sunriseTimeAsNumber || j > sunsetTimeAsNumber;
-        if (isNight) {
-          console.log("j " + j);
-          console.log("sunrise: " + sunriseTimeAsNumber);
-          console.log("sunset: " + sunsetTimeAsNumber);
-        }
 
         hourlyForecast["h" + j] = {
           weather: associateIconWithWeatherCode(
@@ -116,10 +112,46 @@ function DailyForecast(props: { forecast: Forecast }) {
     dayVisible.current = newDayIndex;
   }
   const weekWeatherData = regroupDataPerDay(forecast);
+  function handleScroll(event: WheelEvent) {
+    const navDiv = document.getElementById(
+      "daily--forecast__wrapper__navigation"
+    );
+    if (navDiv) {
+      navDiv.onwheel = function () {
+        return false;
+      };
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.deltaY > 0 || event.deltaX > 0) {
+      showNextDay("next");
+    }
+    if (event.deltaY < 0 || event.deltaX < 0) {
+      showNextDay("prev");
+    }
+  }
+  function handleTouchStart(event: TouchEvent) {
+    console.log("start at " + event.touches[0].clientX);
+    startTouchXPosition = event.touches[0].clientX;
+  }
+  function handleTouchEnd(event: TouchEvent) {
+    const endTouchXPosition = event.changedTouches[0].clientX;
+    if (endTouchXPosition - startTouchXPosition < -50) {
+      showNextDay("next");
+    }
+    if (endTouchXPosition - startTouchXPosition > 50) {
+      showNextDay("prev");
+    }
+    startTouchXPosition = 0;
+  }
   return (
     <div
       className="daily--forecast__wrapper__navigation"
       id="daily--forecast__wrapper__navigation"
+      onWheel={handleScroll}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
     >
       {navigationHidden != "left" && (
         <a
@@ -153,7 +185,13 @@ function DailyForecast(props: { forecast: Forecast }) {
         >
           {weekWeatherData &&
             weekWeatherData.map((day, index) => {
-              return <DailyCard day={day} id={"card-" + index} />;
+              return (
+                <DailyCard
+                  day={day}
+                  id={"card-" + index}
+                  key={"dailycard" + index}
+                />
+              );
             })}
         </Stack>
       </div>

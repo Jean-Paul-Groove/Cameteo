@@ -5,7 +5,7 @@ import { monthEnum } from "../../../../enums/monthsEnum";
 import "./DailyCard.css";
 import DailyCardWeatherPrediction from "./DailyCardWeatherPrediction/DailyCardWeatherPrediction";
 import CardSwitchPrediction from "./CardSwitchPrediction/CardSwitchPrediction";
-import { useState } from "react";
+import { WheelEvent, useState } from "react";
 import TemperatureDisplay from "./TemperatureDisplay/TemperatureDisplay";
 import SunTimeDisplay from "./SunTimeDisplay/SunTimeDisplay";
 import RainWindDisplay from "./RainWindDisplay/RainWindDisplay";
@@ -45,6 +45,20 @@ function DailyCard(props: {
     return formatedDay;
   }
   const hoursToShow = [8, 12, 16, 20];
+  function handleScrollOnDailyPredictions(event: WheelEvent) {
+    if (predictionDisplay === "daily") {
+      return;
+    }
+    event.stopPropagation();
+    const navDiv = document.getElementById(
+      "daily--forecast__wrapper__navigation"
+    );
+    if (navDiv) {
+      navDiv.onwheel = function () {
+        return true;
+      };
+    }
+  }
   return (
     <Card
       color="primary"
@@ -64,20 +78,23 @@ function DailyCard(props: {
         windDirection={day.windDirection}
         windSpeed={day.windSpeed}
       />{" "}
-      <div className="daily-card__hourly-predictions">
+      <div
+        className="daily-card__hourly-predictions"
+        onWheel={handleScrollOnDailyPredictions}
+      >
         {Object.keys(day.hourlyForecast).map((weatherKey, index) => {
           if (predictionDisplay === "daily" && !hoursToShow.includes(index)) {
             return;
           } else {
             return (
-              <>
+              <div key={index + "dailypredictions"}>
                 <Divider inset="none" orientation="horizontal" />
                 <DailyCardWeatherPrediction
                   hourlyPrediction={day.hourlyForecast[weatherKey]}
                 >
                   {weatherKey.split("h")[1] + "h"}
                 </DailyCardWeatherPrediction>
-              </>
+              </div>
             );
           }
         })}

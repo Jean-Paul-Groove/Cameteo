@@ -15,7 +15,6 @@ function Forecast() {
       );
       const predictions = await data.json();
       setWeatherPrediction(predictions);
-      console.log(predictions);
     } catch (error) {
       console.log(error);
     }
