@@ -89,18 +89,19 @@ function DailyForecast(props: { forecast: Forecast }) {
     const newDayIndex =
       action === "next" ? dayVisible.current + 1 : dayVisible.current - 1;
     const gallery = document.getElementById("daily--forecast__gallery");
-    const firstCard = document.getElementById("card-0");
+    const firstCard = document.getElementById("card-1");
     if (gallery && firstCard) {
-      const cardWidth =
-        +window.getComputedStyle(firstCard).width.split("px")[0] +
-        +window.getComputedStyle(firstCard).marginLeft.split("px")[0];
-      gallery.style.transform = `translateX(-${cardWidth * newDayIndex}px)`;
+      const cardWidth = +window
+        .getComputedStyle(firstCard)
+        .width.split("px")[0];
+      const cardMarginLeft = +window
+        .getComputedStyle(firstCard)
+        .marginLeft.split("px")[0];
+      const boxWidth = cardWidth + cardMarginLeft;
+      gallery.style.transform = `translateX(-${boxWidth * newDayIndex}px)`;
     }
 
-    if (
-      dayVisible.current == 0 ||
-      dayVisible.current == weekWeatherData.length - 1
-    ) {
+    if (newDayIndex !== 0 && newDayIndex !== weekWeatherData.length - 1) {
       setNavigationHidden("none");
     }
     if (newDayIndex === 0) {
@@ -109,6 +110,7 @@ function DailyForecast(props: { forecast: Forecast }) {
     if (newDayIndex === weekWeatherData.length - 1) {
       setNavigationHidden("right");
     }
+
     dayVisible.current = newDayIndex;
   }
   const weekWeatherData = regroupDataPerDay(forecast);
@@ -132,7 +134,6 @@ function DailyForecast(props: { forecast: Forecast }) {
     }
   }
   function handleTouchStart(event: TouchEvent) {
-    console.log("start at " + event.touches[0].clientX);
     startTouchXPosition = event.touches[0].clientX;
   }
   function handleTouchEnd(event: TouchEvent) {

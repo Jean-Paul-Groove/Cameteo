@@ -6,12 +6,9 @@
 }
 #daily--forecast__gallery {
   transition: all 0.7s ease-in-out;
+  padding-left: 15vw;
 }
 
-.empty-div {
-  width: 300px;
-  min-width: 0;
-}
 .daily--forecast__wrapper__navigation {
   position: relative;
 }
@@ -39,7 +36,7 @@
   transform: rotate(180deg);
 }
 @media screen and (max-width: 600px) {
-  .daily--card__line.empty-div {
-    width: 0;
+  #daily--forecast__gallery {
+    padding-left: 15vw;
   }
 }

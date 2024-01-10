@@ -23,5 +23,6 @@
   .daily-card {
     min-width: 0;
     width: 70vw;
+    margin-left: 15vw;
   }
 }
