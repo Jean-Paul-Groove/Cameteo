@@ -198,5 +198,4 @@ function DailyForecast(props: { forecast: Forecast }) {
     </div>
   );
 }
-
 export default DailyForecast;
