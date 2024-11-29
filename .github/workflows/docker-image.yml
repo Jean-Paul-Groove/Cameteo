@@ -5,7 +5,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.actor }}/cameteo:latest
+  IMAGE_NAME: ${{ secret.REPO_OWNER }}/cameteo:latest
 
 jobs:
   publish:
