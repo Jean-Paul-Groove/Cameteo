@@ -2,11 +2,10 @@ name: Publish and deploy to VPS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
-  [workflow_dispatch]
-
+    branches: ["main"]
+  workflow_dispatch:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ secrets.REPO_OWNER }}/cameteo:latest
